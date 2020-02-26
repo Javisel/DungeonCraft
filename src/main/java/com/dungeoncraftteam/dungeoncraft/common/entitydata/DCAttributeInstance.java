@@ -6,10 +6,11 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.UUID;
 
-public class DungeonCraftAttribute extends ModifiableAttributeInstance {
+public class DCAttributeInstance extends ModifiableAttributeInstance {
 
+    //TODO - Forge Event Hooks for Attribute Modification
 
-    public DungeonCraftAttribute(AbstractAttributeMap p_i1608_1_, IAttribute p_i1608_2_) {
+    public DCAttributeInstance(AbstractAttributeMap p_i1608_1_, IAttribute p_i1608_2_) {
         super(p_i1608_1_, p_i1608_2_);
     }
 
