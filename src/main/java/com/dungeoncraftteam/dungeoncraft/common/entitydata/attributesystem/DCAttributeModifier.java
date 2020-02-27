@@ -1,14 +1,13 @@
-package com.dungeoncraftteam.dungeoncraft.common.combatengine;
+package com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem;
 
 import com.dungeoncraftteam.dungeoncraft.DungeonCraft;
-import io.netty.util.internal.ThreadLocalRandom;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 
 import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class DCAttributeModifier {
+public class DCAttributeModifier extends AttributeModifier {
 
 
     private final double amount;
@@ -17,24 +16,33 @@ public class DCAttributeModifier {
     private final UUID id;
     private boolean isSaved = true;
 
-    public DCAttributeModifier(String nameIn, double amountIn, DCAttributeModifier.Operation operationIn) {
-        this(MathHelper.getRandomUUID(ThreadLocalRandom.current()), () -> {
-            return nameIn;
-        }, amountIn, operationIn);
+   public  DCAttributeModifier(String nameIn, double amountIn, AttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
+        super(nameIn, amountIn, operationIn);
+        this.amount = amount;
+        this.operation = operation;
+        this.name = name;
+        this.id = id;
+        this.isSaved = isSaved;
     }
 
-    public DCAttributeModifier(UUID uuid, String nameIn, double amountIn, DCAttributeModifier.Operation operationIn) {
-        this(uuid, () -> {
-            return nameIn;
-        }, amountIn, operationIn);
+    public   DCAttributeModifier(UUID uuid, String nameIn, double amountIn, AttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
+        super(uuid, nameIn, amountIn, operationIn);
+        this.amount = amount;
+        this.operation = operation;
+        this.name = name;
+        this.id = id;
+        this.isSaved = isSaved;
     }
 
-    public DCAttributeModifier(UUID uuid, Supplier<String> nameIn, double amountIn, DCAttributeModifier.Operation operationIn) {
-        this.id = uuid;
-        this.name = nameIn;
-        this.amount = amountIn;
-        this.operation = operationIn;
+    public   DCAttributeModifier(UUID uuid, Supplier<String> nameIn, double amountIn, AttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
+        super(uuid, nameIn, amountIn, operationIn);
+        this.amount = amount;
+        this.operation = operation;
+        this.name = name;
+        this.id = id;
+        this.isSaved = isSaved;
     }
+
 
     public UUID getID() {
         return this.id;
@@ -64,7 +72,7 @@ public class DCAttributeModifier {
         if (this.operation == Operation.ADDITION) {
 
             return in + amount;
-        } else if (this.operation == Operation.MULTIPLY) {
+        } else if (this.operation == Operation.MULTIPLY_TOTAL) {
 
             return in * (1+ amount);
         } else {
@@ -104,27 +112,10 @@ public class DCAttributeModifier {
         return "DCAttributeModifier{amount=" + this.amount + ", operation=" + this.operation + ", name='" + (String)this.name.get() + '\'' + ", id=" + this.id + ", serialize=" + this.isSaved + '}';
     }
 
-    public static enum Operation {
-        ADDITION(0),
-        MULTIPLY(1);
 
-        private static final DCAttributeModifier.Operation[] VALUES = new DCAttributeModifier.Operation[]{ADDITION, MULTIPLY};
-        private final int id;
 
-        private Operation(int id) {
-            this.id = id;
-        }
 
-        public int getId() {
-            return this.id;
-        }
 
-        public static DCAttributeModifier.Operation byId(int id) {
-            if (id >= 0 && id < VALUES.length) {
-                return VALUES[id];
-            } else {
-                throw new IllegalArgumentException("No operation with value " + id);
-            }
-        }
-    }
+
+
 }

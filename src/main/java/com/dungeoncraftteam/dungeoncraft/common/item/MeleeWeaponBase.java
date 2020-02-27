@@ -11,13 +11,13 @@ import java.util.HashMap;
 public class MeleeWeaponBase extends ItemBase {
 
 
-    private ItemTier tier;
+    private IItemTier tier;
     private double attackDamage;
     private double attackSpeed;
 
-    public MeleeWeaponBase(String name, IItemTier tier, double baseAttackDamage, double attackSpeed, int baseDurability, Properties properties, ItemTier tier1) {
-        super(name, properties.maxDamage((tier1.getMaxUses()+baseDurability)));
-        this.tier = tier1;
+    public MeleeWeaponBase(String name, IItemTier tier, double baseAttackDamage, double attackSpeed, int baseDurability, Properties properties) {
+        super(name, properties.maxDamage((tier.getMaxUses()+baseDurability)));
+        this.tier = tier;
 
         attackDamage=baseAttackDamage+tier.getAttackDamage();
         this.attackSpeed=attackSpeed;
@@ -34,7 +34,7 @@ public class MeleeWeaponBase extends ItemBase {
 
 
 
-    public ItemTier getTier() {
+    public IItemTier getTier() {
         return tier;
     }
 

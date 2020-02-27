@@ -1,5 +1,10 @@
 package com.dungeoncraftteam.dungeoncraft.common.combatengine;
 
+import net.minecraft.item.DyeColor;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
 public enum EnumDamageSubType {
 
     TRUE("true",0),
@@ -20,7 +25,9 @@ public enum EnumDamageSubType {
 
 
 
-
+    public static final EnumDamageSubType[] VALUES = Arrays.stream(values()).sorted(Comparator.comparingInt(EnumDamageSubType::getId)).toArray((p_199795_0_) -> {
+        return new EnumDamageSubType[p_199795_0_];
+    });
 
     int id;
 
