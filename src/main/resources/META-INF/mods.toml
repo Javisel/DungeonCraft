@@ -26,11 +26,11 @@ logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
 credits="Thanks for this example mod goes to Java" #optional
 # A text field displayed in the mod UI
-authors="Superlord9432 - Project Lead & Programmer. Javisel - Programmer. Coda - Model & Textures.   " #optional
+authors="Superlord9432 - Project Lead & Programmer. Javisel - Programmer. Coda - Model & Textures.  Androsa. Dire. 123wdog. TheLittleAntlion" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 
-Turning minecraft into an rpg.
+Turning minecraft into an RPG.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.dungeoncraft]] #optional
@@ -50,4 +50,10 @@ Turning minecraft into an rpg.
     mandatory=true
     versionRange="[1.14.4]"
     ordering="NONE"
+    side="BOTH"
+[[dependencies.dungeoncraft]]
+    modId="curios"
+    mandatory=true
+    versionRange="[FORGE-1.14.4-1.0.5,]"
+    ordering="AFTER"
     side="BOTH"

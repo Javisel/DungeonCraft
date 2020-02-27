@@ -24,7 +24,7 @@ public class DungeonCraft
 {
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
-
+    public static final String MODID = "dungeoncraft";
     public DungeonCraft() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
