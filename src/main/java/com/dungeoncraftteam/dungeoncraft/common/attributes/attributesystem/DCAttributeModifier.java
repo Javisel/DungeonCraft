@@ -1,7 +1,6 @@
-package com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem;
+package com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem;
 
 import com.dungeoncraftteam.dungeoncraft.DungeonCraft;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -16,21 +15,7 @@ public class DCAttributeModifier  {
     private final UUID id;
     private boolean isSaved = true;
 
-   public  DCAttributeModifier(String nameIn, double amountIn, DCAttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
-        this.amount = amount;
-        this.operation = operation;
-        this.name = nameIn;
-        this.id = id;
-        this.isSaved = isSaved;
-    }
 
-    public   DCAttributeModifier(UUID uuid, String nameIn, double amountIn, DCAttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
-        this.amount = amount;
-        this.operation = operation;
-        this.name = nameIn;
-        this.id = id;
-        this.isSaved = isSaved;
-    }
 
 
     public DCAttributeModifier(UUID uuid, String nameIn, double amountIn, DCAttributeModifier.Operation operationIn) {

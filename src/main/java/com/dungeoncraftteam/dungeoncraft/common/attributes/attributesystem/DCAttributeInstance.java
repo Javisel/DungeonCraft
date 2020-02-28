@@ -1,4 +1,4 @@
-package com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem;
+package com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -172,7 +172,9 @@ public class DCAttributeInstance  {
             d1 *= 1.0D + attributemodifier2.getAmount();
         }
 
-        return this.genericAttribute.clampValue(d1);
+
+
+        return d1;
     }
 
     private Collection<DCAttributeModifier> getModifierbyOperation(DCAttributeModifier.Operation operation) {

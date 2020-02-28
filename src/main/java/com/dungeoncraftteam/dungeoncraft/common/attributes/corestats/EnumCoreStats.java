@@ -1,6 +1,6 @@
-package com.dungeoncraftteam.dungeoncraft.common.entitydata.corestats;
+package com.dungeoncraftteam.dungeoncraft.common.attributes.corestats;
 
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DungeoncraftAttributes;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
 import net.minecraft.entity.ai.attributes.IAttribute;
 
 import java.util.UUID;

@@ -1,8 +1,15 @@
 package com.dungeoncraftteam.dungeoncraft;
 
+import com.dungeoncraftteam.dungeoncraft.client.OverlayHandler;
+import com.dungeoncraftteam.dungeoncraft.common.CommonEventHandler;
+import com.dungeoncraftteam.dungeoncraft.common.capabilities.entity.EntityData;
+import com.dungeoncraftteam.dungeoncraft.common.capabilities.entity.EntityDataStorage;
+import com.dungeoncraftteam.dungeoncraft.common.capabilities.entity.IEntityData;
+import com.dungeoncraftteam.dungeoncraft.common.registration.PacketRegistration;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -41,14 +48,21 @@ public class DungeonCraft
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+        CapabilityManager.INSTANCE.register(IEntityData.class, new EntityDataStorage(), EntityData::new);
+       //TODO CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataStorage(), PlayerData::new);
+        MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
+        PacketRegistration.register();
+
+
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+
+
+        MinecraftForge.EVENT_BUS.register(new OverlayHandler());
+
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

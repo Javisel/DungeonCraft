@@ -1,67 +1,65 @@
 package com.dungeoncraftteam.dungeoncraft.common.capabilities.entity;
 
 import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageSubType;
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DCAttributeInstance;
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DCAttributeModifier;
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DungeoncraftAttributes;
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DCAttributeMap;
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.corestats.*;
-import net.minecraft.entity.SharedMonsterAttributes;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeInstance;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeModifier;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeMap;
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DungeoncraftAttributes.*;
+import static com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes.*;
 
 public class EntityData implements IEntityData {
 
 
 
     DCAttributeMap statMap = new DCAttributeMap();
-    Strength strength = new Strength(statMap);
-    Dexterity dexterity = new Dexterity(statMap);
-    Constitution constitution = new Constitution(statMap);
-    Intelliegence intelliegence = new Intelliegence(statMap);
+
     HashMap<EnumDamageSubType,ArrayList<DCAttributeModifier>> defensiveSubtypeModifiers = new HashMap<>();
     HashMap<EnumDamageSubType, ArrayList<DCAttributeModifier>> offensiveSubtypeModifiers = new HashMap<>();
 
-    Wisdom wisdom = new Wisdom(statMap);
-    Charisma charisma = new Charisma(statMap);
 
+    int ticks = 0;
     float resourceamount = 0;
 
 
-
     @Override
-    public Strength getStrength() {
+    public DCAttributeMap getStatMap() {
+        return statMap;
+    }
+    @Override
+    public DCAttributeInstance getStrength() {
 
-        return  strength;
+
+            return statMap.getAttributeInstance(STRENGTH);
     }
 
     @Override
-    public Dexterity getDexterity() {
-        return dexterity;
+    public DCAttributeInstance getDexterity() {
+        return statMap.getAttributeInstance(DEXTERITY);
     }
 
     @Override
-    public Constitution getConstitution() {
-        return constitution;
+    public DCAttributeInstance getConstitution() {
+        return statMap.getAttributeInstance(CONSTITUTION);
     }
 
     @Override
-    public Intelliegence getIntelligence() {
-        return intelliegence;
+    public DCAttributeInstance getIntelligence() {
+        return statMap.getAttributeInstance(INTELLIGENCE);
     }
 
     @Override
-    public Charisma getCharisma() {
-        return charisma;
+    public DCAttributeInstance getCharisma() {
+        return statMap.getAttributeInstance(CHARISMA);
     }
 
     @Override
-    public Wisdom getWisdom() {
-        return wisdom;
+    public DCAttributeInstance getWisdom() {
+        return statMap.getAttributeInstance(WISDOM);
     }
 
     @Override
@@ -124,16 +122,33 @@ public class EntityData implements IEntityData {
         return resourceamount;
     }
 
+
     @Override
     public void setResourceAmount(double amount) {
-        resourceamount= (float) amount;
+
+        if (amount>getMaxResourceAmount().getValue()) {
+            amount=resourceamount;
+        }
+
+
+        resourceamount = (float) amount;
     }
 
     @Override
     public void addResourceAmount(float amount) {
 
-        resourceamount+=amount;
+        if (amount+resourceamount > getMaxResourceAmount().getValue()) {
+            amount= (float) (getMaxResourceAmount().getValue()-resourceamount);
+
+        }
+
+        if (amount+resourceamount<0) {
+            amount=resourceamount * -1;
+        }
+
+        resourceamount += amount;
     }
+
 
     @Override
     public DCAttributeInstance getMaxResourceAmount() {
@@ -184,4 +199,24 @@ public class EntityData implements IEntityData {
 
         return nbt;
     }
+
+    @Override
+    public int getTicks() {
+        return ticks;
+    }
+
+    @Override
+    public void tick() {
+
+        if (ticks==20) {
+            ticks=0;
+        } else {
+            ticks++;
+        }
+
+    }
+
+
+
+
 }

@@ -1,6 +1,9 @@
-package com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem;
+package com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem;
 
 import com.dungeoncraftteam.dungeoncraft.DungeonCraft;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.corestats.CoreStat;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.corestats.EnumCoreStats;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -8,20 +11,13 @@ import net.minecraft.nbt.ListNBT;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class DungeoncraftAttributes {
 
 
     //CORE
-
-    public static final IAttribute STRENGTH = new RangedAttribute(null, "dungeoncraft.Strength", 0, -10.0D, 20).setDescription("A entity's Strength Value.").setShouldWatch(true);
-    public static final IAttribute CONSTITUTION = new RangedAttribute(null, "dungeoncraft.Constitution", 0, -10.0D, 20).setDescription("A entity's Constitution Value.").setShouldWatch(true);
-    public static final IAttribute DEXTERITY = new RangedAttribute(null, "dungeoncraft.Dexterity", 0, -10.0D, 20).setDescription("A entity's Dexterity Value.").setShouldWatch(true);
-    public static final IAttribute INTELLIGENCE = new RangedAttribute(null, "dungeoncraft.Intelligence", 0, -10.0D, 20).setDescription("A entity's Intelligence Value.").setShouldWatch(true);
-    public static final IAttribute WISDOM = new RangedAttribute(null, "dungeoncraft.Wisdom", 0, -10.0D, 20).setDescription("A entity's Wisdom Value.").setShouldWatch(true);
-    public static final IAttribute CHARISMA = new RangedAttribute(null, "dungeoncraft.Charisma", 0, -10.0D, 20).setDescription("A entity's Charisma Value.").setShouldWatch(true);
-
 
 
     //BATTLESTAT
@@ -39,34 +35,74 @@ public class DungeoncraftAttributes {
 
     public static final IAttribute SPELLVAMP = new RangedAttribute(null, "dungeoncraft.SpellVamp", 0, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
     public static final IAttribute HEALTH_REGEN = new RangedAttribute(null, "dungeoncraft.HealthRegen", 0, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
-    public static final IAttribute MAX_RESOURCE_AMOUNT = new RangedAttribute(null, "dungeoncraft.MaxResourceAmount", 0, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
-    public static final IAttribute RESOURCE_REGEN = new RangedAttribute(null, "dungeoncraft.ResourceRegen", 0, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
+    public static final IAttribute MAX_RESOURCE_AMOUNT = new RangedAttribute(null, "dungeoncraft.MaxResourceAmount", 500, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
+    public static final IAttribute RESOURCE_REGEN = new RangedAttribute(null, "dungeoncraft.ResourceRegen", 2.5d, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
     public static final IAttribute COOLDOWN_REDUCTION = new RangedAttribute(null, "dungeoncraft.CooldownReduction", 0.0D, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
     public static final IAttribute EXPERIENCE = new RangedAttribute(null, "dungeoncraft.Experience", 0, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
 
-    public static ArrayList<IAttribute> battleAttributes = new ArrayList<>();
+
+    public static final IAttribute STRENGTH = new CoreStat(null, "dungeoncraft.Strength" , EnumCoreStats.STRENGTH,new HashMap<IAttribute, CoreStat.modifier>()).setDescription("A entity's Strength Value.").setShouldWatch(true);
+    public static final IAttribute DEXTERITY = new CoreStat(null, "dungeoncraft.Dexterity" , EnumCoreStats.DEXTERITY,new HashMap<IAttribute, CoreStat.modifier>()).setDescription("A entity's Dexterity Value.").setShouldWatch(true);
+    public static final IAttribute CONSTITUTION = new CoreStat(null, "dungeoncraft.Constitution" , EnumCoreStats.CONSTITUTION,new HashMap<IAttribute, CoreStat.modifier>()).setDescription("A entity's Constitution Value.").setShouldWatch(true);
+    public static final IAttribute CHARISMA = new CoreStat(null, "dungeoncraft.Charisma" , EnumCoreStats.CHARISMA,new HashMap<IAttribute, CoreStat.modifier>()).setDescription("A entity's Charisma Value.").setShouldWatch(true);
+    public static final IAttribute WISDOM = new CoreStat(null, "dungeoncraft.Wisdom" , EnumCoreStats.WISDOM,new HashMap<IAttribute, CoreStat.modifier>()).setDescription("A entity's Dexterity Value.").setShouldWatch(true);
+    public static final IAttribute INTELLIGENCE = new CoreStat(null, "dungeoncraft.Intelliegence" , EnumCoreStats.INTELLIEGENCE,new HashMap<IAttribute, CoreStat.modifier>()).setDescription("A entity's Dexterity Value.").setShouldWatch(true);
+
+
+
+
+    public static ArrayList<IAttribute> attributes = new ArrayList<>();
 
     static  {
+        attributes.add(STRENGTH);
 
 
-        battleAttributes.add(ARMOR);
-        battleAttributes.add(MAGIC_RESIST);
-        battleAttributes.add(SPELL_POWER);
-        battleAttributes.add(CRITCHANCE);
-        battleAttributes.add(CRITDAMAGE);
-        battleAttributes.add(LIFESTEAL);
-        battleAttributes.add(FLATARMORPEN);
-        battleAttributes.add(FLATMAGICPEN);
-        battleAttributes.add(PERCENTARMORPEN);
-        battleAttributes.add(PERCENTMAGICPEN);
-        battleAttributes.add(SPELLVAMP);
-        battleAttributes.add(HEALTH_REGEN);
-        battleAttributes.add(ARMOR);
-        battleAttributes.add(MAGIC_RESIST);
-        battleAttributes.add(MAX_RESOURCE_AMOUNT);
-        battleAttributes.add(COOLDOWN_REDUCTION);
-        battleAttributes.add(EXPERIENCE);
-        battleAttributes.add(RESOURCE_REGEN);
+        ((CoreStat) STRENGTH).attributesModified.put(SharedMonsterAttributes.ATTACK_DAMAGE,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,4));
+        ((CoreStat) STRENGTH).attributesModified.put(ARMOR,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2));
+
+
+
+
+
+        attributes.add(DEXTERITY);
+
+        ((CoreStat) DEXTERITY).attributesModified.put(SharedMonsterAttributes.ATTACK_SPEED,new CoreStat.modifier(DCAttributeModifier.Operation.MULTIPLY_BASE,0.05));
+        ((CoreStat) DEXTERITY).attributesModified.put(SharedMonsterAttributes.MOVEMENT_SPEED,new CoreStat.modifier(DCAttributeModifier.Operation.MULTIPLY_BASE,0.005));
+        ((CoreStat) DEXTERITY).attributesModified.put(CRITCHANCE,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2.5));
+
+        attributes.add(CONSTITUTION);
+        ((CoreStat) CONSTITUTION).attributesModified.put(SharedMonsterAttributes.MAX_HEALTH,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,20));
+        ((CoreStat) CONSTITUTION).attributesModified.put(HEALTH_REGEN,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,0.5));
+        ((CoreStat) CONSTITUTION).attributesModified.put(MAGIC_RESIST,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2));
+
+
+
+        attributes.add(INTELLIGENCE);
+
+        ((CoreStat) INTELLIGENCE).attributesModified.put(MAX_RESOURCE_AMOUNT,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,10));
+        ((CoreStat) INTELLIGENCE).attributesModified.put(RESOURCE_REGEN,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,0.5));
+
+
+        attributes.add(WISDOM);
+        ((CoreStat) WISDOM).attributesModified.put(COOLDOWN_REDUCTION,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2.5));
+
+        attributes.add(CHARISMA);
+        attributes.add(ARMOR);
+        attributes.add(MAGIC_RESIST);
+        attributes.add(SPELL_POWER);
+        attributes.add(CRITCHANCE);
+        attributes.add(CRITDAMAGE);
+        attributes.add(LIFESTEAL);
+        attributes.add(FLATARMORPEN);
+        attributes.add(FLATMAGICPEN);
+        attributes.add(PERCENTARMORPEN);
+        attributes.add(PERCENTMAGICPEN);
+        attributes.add(SPELLVAMP);
+        attributes.add(HEALTH_REGEN);
+        attributes.add(MAX_RESOURCE_AMOUNT);
+        attributes.add(COOLDOWN_REDUCTION);
+        attributes.add(EXPERIENCE);
+        attributes.add(RESOURCE_REGEN);
 
     }
 
@@ -76,22 +112,10 @@ public class DungeoncraftAttributes {
 
 
 
-        attributeMap.registerAttribute(SPELL_POWER);
-        attributeMap.registerAttribute(CRITCHANCE);
-        attributeMap.registerAttribute(CRITDAMAGE);
-        attributeMap.registerAttribute(LIFESTEAL);
-        attributeMap.registerAttribute(FLATARMORPEN);
-        attributeMap.registerAttribute(FLATMAGICPEN);
-        attributeMap.registerAttribute(PERCENTARMORPEN);
-        attributeMap.registerAttribute(PERCENTMAGICPEN);
-        attributeMap.registerAttribute(SPELLVAMP);
-        attributeMap.registerAttribute(HEALTH_REGEN);
-        attributeMap.registerAttribute(ARMOR);
-        attributeMap.registerAttribute(MAGIC_RESIST);
-        attributeMap.registerAttribute(MAX_RESOURCE_AMOUNT);
-        attributeMap.registerAttribute(COOLDOWN_REDUCTION);
-        attributeMap.registerAttribute(EXPERIENCE);
-        attributeMap.registerAttribute(RESOURCE_REGEN);
+        for (IAttribute attribute : attributes) {
+
+            attributeMap.registerAttribute(attribute);
+        }
 
 
     }

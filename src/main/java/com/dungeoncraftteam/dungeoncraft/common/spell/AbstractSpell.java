@@ -1,6 +1,5 @@
 package com.dungeoncraftteam.dungeoncraft.common.spell;
 
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.corestats.Strength;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

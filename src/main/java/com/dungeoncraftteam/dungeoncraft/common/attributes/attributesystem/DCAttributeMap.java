@@ -1,4 +1,4 @@
-package com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem;
+package com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;

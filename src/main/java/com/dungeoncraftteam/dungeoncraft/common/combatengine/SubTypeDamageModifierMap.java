@@ -1,7 +1,6 @@
-package com.dungeoncraftteam.dungeoncraft.common.entitydata;
+package com.dungeoncraftteam.dungeoncraft.common.combatengine;
 
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DCAttributeModifier;
-import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageSubType;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeModifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;

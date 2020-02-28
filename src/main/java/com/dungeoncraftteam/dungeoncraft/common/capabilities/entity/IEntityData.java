@@ -1,9 +1,9 @@
 package com.dungeoncraftteam.dungeoncraft.common.capabilities.entity;
 
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeMap;
 import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageSubType;
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DCAttributeInstance;
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DCAttributeModifier;
-import com.dungeoncraftteam.dungeoncraft.common.entitydata.corestats.*;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeInstance;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeModifier;
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.ArrayList;
@@ -11,17 +11,19 @@ import java.util.HashMap;
 
 public interface IEntityData {
 
-    Strength getStrength();
+    DCAttributeMap getStatMap();
 
-    Dexterity getDexterity();
+    DCAttributeInstance getStrength();
 
-    Constitution getConstitution();
+    DCAttributeInstance getDexterity();
 
-    Intelliegence getIntelligence();
+    DCAttributeInstance getConstitution();
 
-    Charisma getCharisma();
+    DCAttributeInstance getIntelligence();
 
-    Wisdom getWisdom();
+    DCAttributeInstance getCharisma();
+
+    DCAttributeInstance getWisdom();
 
     DCAttributeInstance getArmour();
 
@@ -74,4 +76,7 @@ public interface IEntityData {
     CompoundNBT writeNBT();
 
 
+    int getTicks();
+
+    void tick();
 }
