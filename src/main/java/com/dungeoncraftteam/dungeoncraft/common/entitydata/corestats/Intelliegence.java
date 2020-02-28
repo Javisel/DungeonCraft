@@ -1,10 +1,10 @@
 package com.dungeoncraftteam.dungeoncraft.common.entitydata.corestats;
 
+import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DCAttributeMap;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
 
 public class Intelliegence extends CoreStatInstance {
-    public Intelliegence(AbstractAttributeMap p_i1608_1_) {
+    public Intelliegence(DCAttributeMap p_i1608_1_) {
         super(EnumCoreStats.INTELLIEGENCE, p_i1608_1_);
     }
 

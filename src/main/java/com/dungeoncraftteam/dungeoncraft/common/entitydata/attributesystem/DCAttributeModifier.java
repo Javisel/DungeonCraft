@@ -7,49 +7,45 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class DCAttributeModifier extends AttributeModifier {
+public class DCAttributeModifier  {
 
 
     private final double amount;
     private final DCAttributeModifier.Operation operation;
-    private final Supplier<String> name;
+    private final String name;
     private final UUID id;
     private boolean isSaved = true;
 
-   public  DCAttributeModifier(String nameIn, double amountIn, AttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
-        super(nameIn, amountIn, operationIn);
+   public  DCAttributeModifier(String nameIn, double amountIn, DCAttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
         this.amount = amount;
         this.operation = operation;
-        this.name = name;
+        this.name = nameIn;
         this.id = id;
         this.isSaved = isSaved;
     }
 
-    public   DCAttributeModifier(UUID uuid, String nameIn, double amountIn, AttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
-        super(uuid, nameIn, amountIn, operationIn);
+    public   DCAttributeModifier(UUID uuid, String nameIn, double amountIn, DCAttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
         this.amount = amount;
         this.operation = operation;
-        this.name = name;
+        this.name = nameIn;
         this.id = id;
         this.isSaved = isSaved;
     }
 
-    public   DCAttributeModifier(UUID uuid, Supplier<String> nameIn, double amountIn, AttributeModifier.Operation operationIn, double amount, Operation operation, Supplier<String> name, UUID id, boolean isSaved) {
-        super(uuid, nameIn, amountIn, operationIn);
-        this.amount = amount;
-        this.operation = operation;
-        this.name = name;
-        this.id = id;
-        this.isSaved = isSaved;
-    }
 
+    public DCAttributeModifier(UUID uuid, String nameIn, double amountIn, DCAttributeModifier.Operation operationIn) {
+        this.id = uuid;
+        this.name = nameIn;
+        this.amount = amountIn;
+        this.operation = operationIn;
+    }
 
     public UUID getID() {
         return this.id;
     }
 
     public String getName() {
-        return this.name.get();
+        return this.name;
     }
 
     public DCAttributeModifier.Operation getOperation() {
@@ -109,11 +105,34 @@ public class DCAttributeModifier extends AttributeModifier {
     }
 
     public String toString() {
-        return "DCAttributeModifier{amount=" + this.amount + ", operation=" + this.operation + ", name='" + (String)this.name.get() + '\'' + ", id=" + this.id + ", serialize=" + this.isSaved + '}';
+        return "DCAttributeModifier{amount=" + this.amount + ", operation=" + this.operation + ", name='" + (String)this.name + '\'' + ", id=" + this.id + ", serialize=" + this.isSaved + '}';
     }
 
 
+    public static enum Operation {
+        ADDITION(0),
+        MULTIPLY_BASE(1),
+        MULTIPLY_TOTAL(2);
 
+        private static final DCAttributeModifier.Operation[] VALUES = new DCAttributeModifier.Operation[]{ADDITION, MULTIPLY_BASE, MULTIPLY_TOTAL};
+        private final int id;
+
+        private Operation(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return this.id;
+        }
+
+        public static DCAttributeModifier.Operation byId(int id) {
+            if (id >= 0 && id < VALUES.length) {
+                return VALUES[id];
+            } else {
+                throw new IllegalArgumentException("No operation with value " + id);
+            }
+        }
+    }
 
 
 

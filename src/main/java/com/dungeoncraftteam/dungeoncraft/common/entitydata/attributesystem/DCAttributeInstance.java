@@ -11,23 +11,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class DCAttributeInstance  implements IAttributeInstance {
+public class DCAttributeInstance  {
 
-    private final AbstractAttributeMap attributeMap;
+    private final DCAttributeMap attributeMap;
     private final IAttribute genericAttribute;
-    private final Map<AttributeModifier.Operation, Set<AttributeModifier>> mapByOperation = Maps.newEnumMap(AttributeModifier.Operation.class);
-    private final Map<String, Set<AttributeModifier>> mapByName = Maps.newHashMap();
-    private final Map<UUID, AttributeModifier> mapByUUID = Maps.newHashMap();
+    private final Map<DCAttributeModifier.Operation, Set<DCAttributeModifier>> mapByOperation = Maps.newEnumMap(DCAttributeModifier.Operation.class);
+    private final Map<String, Set<DCAttributeModifier>> mapByName = Maps.newHashMap();
+    private final Map<UUID, DCAttributeModifier> mapByUUID = Maps.newHashMap();
     private double baseValue;
     private boolean needsUpdate = true;
     private double cachedValue;
 
-    public DCAttributeInstance(AbstractAttributeMap attributeMapIn, IAttribute genericAttributeIn) {
+    public DCAttributeInstance(DCAttributeMap attributeMapIn, IAttribute genericAttributeIn) {
         this.attributeMap = attributeMapIn;
         this.genericAttribute = genericAttributeIn;
         this.baseValue = genericAttributeIn.getDefaultValue();
 
-        for(AttributeModifier.Operation attributemodifier$operation : AttributeModifier.Operation.values()) {
+        for(DCAttributeModifier.Operation attributemodifier$operation : DCAttributeModifier.Operation.values()) {
             this.mapByOperation.put(attributemodifier$operation, Sets.newHashSet());
         }
 
@@ -53,14 +53,14 @@ public class DCAttributeInstance  implements IAttributeInstance {
 
 
     //Gets a modifier map by the given Attribute
-    public Collection<AttributeModifier> func_220368_a(AttributeModifier.Operation p_220368_1_) {
+    public Collection<DCAttributeModifier> func_220368_a(DCAttributeModifier.Operation p_220368_1_) {
         return this.mapByOperation.get(p_220368_1_);
     }
 
-    public Collection<AttributeModifier> getModifiers() {
-        Set<AttributeModifier> set = Sets.newHashSet();
+    public Collection<DCAttributeModifier> getModifiers() {
+        Set<DCAttributeModifier> set = Sets.newHashSet();
 
-        for(AttributeModifier.Operation attributemodifier$operation : AttributeModifier.Operation.values()) {
+        for(DCAttributeModifier.Operation attributemodifier$operation : DCAttributeModifier.Operation.values()) {
             set.addAll(this.func_220368_a(attributemodifier$operation));
         }
 
@@ -71,19 +71,19 @@ public class DCAttributeInstance  implements IAttributeInstance {
      * Returns attribute modifier, if any, by the given UUID
      */
     @Nullable
-    public AttributeModifier getModifier(UUID uuid) {
+    public DCAttributeModifier getModifier(UUID uuid) {
         return this.mapByUUID.get(uuid);
     }
 
-    public boolean hasModifier(AttributeModifier modifier) {
+    public boolean hasModifier(DCAttributeModifier modifier) {
         return this.mapByUUID.get(modifier.getID()) != null;
     }
 
-    public void applyModifier(AttributeModifier modifier) {
+    public void applyModifier(DCAttributeModifier modifier) {
         if (this.getModifier(modifier.getID()) != null) {
             throw new IllegalArgumentException("Modifier is already applied on this attribute!");
         } else {
-            Set<AttributeModifier> set = this.mapByName.computeIfAbsent(modifier.getName(), (p_220369_0_) -> {
+            Set<DCAttributeModifier> set = this.mapByName.computeIfAbsent(modifier.getName(), (p_220369_0_) -> {
                 return Sets.newHashSet();
             });
             this.mapByOperation.get(modifier.getOperation()).add(modifier);
@@ -98,12 +98,12 @@ public class DCAttributeInstance  implements IAttributeInstance {
         this.attributeMap.onAttributeModified(this);
     }
 
-    public void removeModifier(AttributeModifier modifier) {
-        for(AttributeModifier.Operation attributemodifier$operation : AttributeModifier.Operation.values()) {
+    public void removeModifier(DCAttributeModifier modifier) {
+        for(DCAttributeModifier.Operation attributemodifier$operation : DCAttributeModifier.Operation.values()) {
             this.mapByOperation.get(attributemodifier$operation).remove(modifier);
         }
 
-        Set<AttributeModifier> set = this.mapByName.get(modifier.getName());
+        Set<DCAttributeModifier> set = this.mapByName.get(modifier.getName());
         if (set != null) {
             set.remove(modifier);
             if (set.isEmpty()) {
@@ -116,18 +116,17 @@ public class DCAttributeInstance  implements IAttributeInstance {
     }
 
     public void removeModifier(UUID p_188479_1_) {
-        AttributeModifier attributemodifier = this.getModifier(p_188479_1_);
+        DCAttributeModifier attributemodifier = this.getModifier(p_188479_1_);
         if (attributemodifier != null) {
             this.removeModifier(attributemodifier);
         }
 
     }
 
-    @Override
     public void removeAllModifiers() {
-        Collection<AttributeModifier> collection = this.getModifiers();
+        Collection<DCAttributeModifier> collection = this.getModifiers();
         if (collection != null) {
-            for(AttributeModifier attributemodifier : Lists.newArrayList(collection)) {
+            for(DCAttributeModifier attributemodifier : Lists.newArrayList(collection)) {
                 this.removeModifier(attributemodifier);
             }
 
@@ -139,9 +138,9 @@ public class DCAttributeInstance  implements IAttributeInstance {
      * removeAllModifiers is for some reason Client Only. this is functionally the same but will work on server side.
      */
     public void clearAllModifiers() {
-        Collection<AttributeModifier> collection = this.getModifiers();
+        Collection<DCAttributeModifier> collection = this.getModifiers();
         if (collection != null) {
-            for(AttributeModifier attributemodifier : Lists.newArrayList(collection)) {
+            for(DCAttributeModifier attributemodifier : Lists.newArrayList(collection)) {
                 this.removeModifier(attributemodifier);
             }
 
@@ -159,28 +158,28 @@ public class DCAttributeInstance  implements IAttributeInstance {
     private double computeValue() {
         double d0 = this.getBaseValue();
 
-        for(AttributeModifier attributemodifier : this.getModifierbyOperation(AttributeModifier.Operation.ADDITION)) {
+        for(DCAttributeModifier attributemodifier : this.getModifierbyOperation(DCAttributeModifier.Operation.ADDITION)) {
             d0 += attributemodifier.getAmount();
         }
 
         double d1 = d0;
 
-        for(AttributeModifier attributemodifier1 : this.getModifierbyOperation(AttributeModifier.Operation.MULTIPLY_BASE)) {
+        for(DCAttributeModifier attributemodifier1 : this.getModifierbyOperation(DCAttributeModifier.Operation.MULTIPLY_BASE)) {
             d1 += d0 * attributemodifier1.getAmount();
         }
 
-        for(AttributeModifier attributemodifier2 : this.getModifierbyOperation(AttributeModifier.Operation.MULTIPLY_TOTAL)) {
+        for(DCAttributeModifier attributemodifier2 : this.getModifierbyOperation(DCAttributeModifier.Operation.MULTIPLY_TOTAL)) {
             d1 *= 1.0D + attributemodifier2.getAmount();
         }
 
         return this.genericAttribute.clampValue(d1);
     }
 
-    private Collection<AttributeModifier> getModifierbyOperation(AttributeModifier.Operation operation) {
-        Set<AttributeModifier> set = Sets.newHashSet(this.func_220368_a(operation));
+    private Collection<DCAttributeModifier> getModifierbyOperation(DCAttributeModifier.Operation operation) {
+        Set<DCAttributeModifier> set = Sets.newHashSet(this.func_220368_a(operation));
 
         for(IAttribute iattribute = this.genericAttribute.getParent(); iattribute != null; iattribute = iattribute.getParent()) {
-            IAttributeInstance iattributeinstance = this.attributeMap.getAttributeInstance(iattribute);
+            DCAttributeInstance iattributeinstance = this.attributeMap.getAttributeInstance(iattribute);
             if (iattributeinstance != null) {
                 set.addAll(iattributeinstance.func_220368_a(operation));
             }

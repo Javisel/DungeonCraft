@@ -1,10 +1,10 @@
 package com.dungeoncraftteam.dungeoncraft.common.entitydata.corestats;
 
+import com.dungeoncraftteam.dungeoncraft.common.entitydata.attributesystem.DCAttributeMap;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
 
 public class Wisdom extends CoreStatInstance {
-    public Wisdom( AbstractAttributeMap p_i1608_1_) {
+    public Wisdom(DCAttributeMap p_i1608_1_) {
         super(EnumCoreStats.WISDOM, p_i1608_1_);
     }
 
