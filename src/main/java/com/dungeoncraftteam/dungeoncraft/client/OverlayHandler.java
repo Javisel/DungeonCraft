@@ -70,7 +70,12 @@ public class OverlayHandler extends GuiUtils {
 
 
         //Healthbar
-        drawTexturedModalRect((x/2)-92,y-40,2,53,barwidth,barheight,-1);
+
+
+        int posx =x/2 - 91;
+        int posy=y-40;
+
+        drawTexturedModalRect(posx,posy,2,53,barwidth,barheight,-1);
         float healthratio = instance.player.getHealth()/instance.player.getMaxHealth();
 
         GlStateManager.pushMatrix();
@@ -90,12 +95,14 @@ public class OverlayHandler extends GuiUtils {
 
         }
 
-        drawTexturedModalRect(((x/2)-91),y-40+1,3,75, (int) (81*healthratio),8,-1);
+        drawTexturedModalRect(posx+1,posy+1,3,75, (int) (81*healthratio),8,-1);
 
         GlStateManager.color3f(0,0,0);
 
-        String hp = instance.player.getHealth() + "/" +instance.player.getMaxHealth();
-        instance.fontRenderer.drawString(hp,((x/2)-91)+instance.fontRenderer.getStringWidth(hp)/4,y-39,Color.WHITE.getRGB()   );
+        String hp = (int)instance.player.getHealth() + "/" + (int)instance.player.getMaxHealth();
+        int stringposx = (posx+91 - instance.fontRenderer.getStringWidth(hp))/2 + 83;
+
+        instance.fontRenderer.drawString(hp,stringposx,posy+1,Color.WHITE.getRGB()   );
 
         GlStateManager.popMatrix();
 
@@ -138,14 +145,14 @@ public class OverlayHandler extends GuiUtils {
         instance.textureManager.bindTexture(RPGHUD);
 
 
-        for (int yscale = 0; yscale < 2; yscale++) {
+
 
             for (int xscale = 0; xscale < 4; xscale++) {
-                drawTexturedModalRect((21 * xscale), (y -30) - (21 * yscale), 2, 2, 20, 20, 50);
+                drawTexturedModalRect((21 * xscale), (y -30) , 2, 2, 20, 20, 50);
 
             }
 
-        }
+
 
     instance.textureManager.bindTexture(IngameGui.GUI_ICONS_LOCATION);
 
