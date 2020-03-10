@@ -1,11 +1,11 @@
-package com.dungeoncraftteam.dungeoncraft.common.spell;
+package com.dungeoncraftteam.dungeoncraft.common.action;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public abstract class  AbstractSpell extends ForgeRegistryEntry<AbstractSpell> {
+public abstract class AbstractAction extends ForgeRegistryEntry<AbstractAction> {
 
 
 
@@ -13,7 +13,7 @@ public abstract class  AbstractSpell extends ForgeRegistryEntry<AbstractSpell> {
 
 
 
-    public AbstractSpell(String name) {
+    public AbstractAction(String name) {
         super();
         setRegistryName(name);
     }

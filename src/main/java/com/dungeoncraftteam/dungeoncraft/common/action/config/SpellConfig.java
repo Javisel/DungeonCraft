@@ -1,4 +1,4 @@
-package com.dungeoncraftteam.dungeoncraft.common.spell.config;
+package com.dungeoncraftteam.dungeoncraft.common.action.config;
 
 
 import com.dungeoncraftteam.dungeoncraft.DungeonCraft;

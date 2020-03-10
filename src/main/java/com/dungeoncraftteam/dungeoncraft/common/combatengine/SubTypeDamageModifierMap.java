@@ -5,12 +5,12 @@ import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAtt
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SubTypeDamageModifierMap extends HashMap<EnumDamageSubType, ArrayList<DCAttributeModifier>> {
+public class SubTypeDamageModifierMap extends HashMap<EnumDamageType, ArrayList<DCAttributeModifier>> {
 
 
     public SubTypeDamageModifierMap() {
 
-        for (EnumDamageSubType subType: EnumDamageSubType.VALUES) {
+        for (EnumDamageType subType: EnumDamageType.VALUES) {
 
 
             this.put(subType,new ArrayList<>());
@@ -21,7 +21,7 @@ public class SubTypeDamageModifierMap extends HashMap<EnumDamageSubType, ArrayLi
 
 
 
-    public double applyModifiers(EnumDamageSubType subType, float amount) {
+    public double applyModifiers(EnumDamageType subType, float amount) {
 
         double total = amount;
 

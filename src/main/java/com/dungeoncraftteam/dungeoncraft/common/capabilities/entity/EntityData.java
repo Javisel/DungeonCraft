@@ -1,6 +1,6 @@
 package com.dungeoncraftteam.dungeoncraft.common.capabilities.entity;
 
-import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageSubType;
+import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeInstance;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeModifier;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
@@ -18,8 +18,8 @@ public class EntityData implements IEntityData {
 
     DCAttributeMap statMap = new DCAttributeMap();
 
-    HashMap<EnumDamageSubType,ArrayList<DCAttributeModifier>> defensiveSubtypeModifiers = new HashMap<>();
-    HashMap<EnumDamageSubType, ArrayList<DCAttributeModifier>> offensiveSubtypeModifiers = new HashMap<>();
+    HashMap<EnumDamageType,ArrayList<DCAttributeModifier>> defensiveSubtypeModifiers = new HashMap<>();
+    HashMap<EnumDamageType, ArrayList<DCAttributeModifier>> offensiveSubtypeModifiers = new HashMap<>();
 
 
     int ticks = 0;
@@ -69,13 +69,32 @@ public class EntityData implements IEntityData {
 
     @Override
     public DCAttributeInstance getMagicResist() {
-        return statMap.getAttributeInstance(DungeoncraftAttributes.MAGIC_RESIST);
+        return statMap.getAttributeInstance(DungeoncraftAttributes.ELEMENTRESIST);
     }
 
     @Override
     public DCAttributeInstance getCritChance() {
         return statMap.getAttributeInstance(DungeoncraftAttributes.CRITCHANCE);
     }
+
+    @Override
+    public DCAttributeInstance getEnumDamageTypeArmor(EnumDamageType type) {
+
+
+
+        return  statMap.getAttributeInstanceByName(type.getDefensiveName());
+    }
+
+    @Override
+    public DCAttributeInstance getEnumDamageTypeDamage(EnumDamageType type) {
+
+
+
+        return  statMap.getAttributeInstanceByName(type.getOffensiveName());
+    }
+
+
+
 
     @Override
     public DCAttributeInstance getCritDamage() {
@@ -171,12 +190,12 @@ public class EntityData implements IEntityData {
     }
 
     @Override
-    public HashMap<EnumDamageSubType, ArrayList<DCAttributeModifier>> getSubtypeDefendingModifiers() {
+    public HashMap<EnumDamageType, ArrayList<DCAttributeModifier>> getSubtypeDefendingModifiers() {
         return defensiveSubtypeModifiers;
     }
 
     @Override
-    public HashMap<EnumDamageSubType, ArrayList<DCAttributeModifier>> getSubtypeAttackingModifiers() {
+    public HashMap<EnumDamageType, ArrayList<DCAttributeModifier>> getSubtypeAttackingModifiers() {
         return offensiveSubtypeModifiers;
     }
 
@@ -187,6 +206,15 @@ public class EntityData implements IEntityData {
 
         resourceamount=nbt.getFloat("resourceamount");
     }
+
+
+
+
+
+
+
+
+
 
     @Override
     public CompoundNBT writeNBT() {

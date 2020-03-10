@@ -1,7 +1,7 @@
 package com.dungeoncraftteam.dungeoncraft.common.capabilities.entity;
 
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeMap;
-import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageSubType;
+import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeInstance;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeModifier;
 import net.minecraft.nbt.CompoundNBT;
@@ -30,6 +30,10 @@ public interface IEntityData {
     DCAttributeInstance getMagicResist();
 
     DCAttributeInstance getCritChance();
+
+    DCAttributeInstance getEnumDamageTypeArmor(EnumDamageType type);
+
+    DCAttributeInstance getEnumDamageTypeDamage(EnumDamageType type);
 
     DCAttributeInstance getCritDamage();
 
@@ -66,9 +70,9 @@ public interface IEntityData {
 
     DCAttributeInstance getResourceRegen();
 
-    HashMap<EnumDamageSubType, ArrayList<DCAttributeModifier>> getSubtypeDefendingModifiers();
+    HashMap<EnumDamageType, ArrayList<DCAttributeModifier>> getSubtypeDefendingModifiers();
 
-    HashMap<EnumDamageSubType, ArrayList<DCAttributeModifier>> getSubtypeAttackingModifiers();
+    HashMap<EnumDamageType, ArrayList<DCAttributeModifier>> getSubtypeAttackingModifiers();
 
 
     void loadNBT(CompoundNBT nbt);

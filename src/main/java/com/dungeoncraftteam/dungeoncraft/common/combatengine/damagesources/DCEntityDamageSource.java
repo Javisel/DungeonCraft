@@ -1,7 +1,6 @@
 package com.dungeoncraftteam.dungeoncraft.common.combatengine.damagesources;
 
-import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageArchetype;
-import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageSubType;
+import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EntityDamageSource;
 
@@ -11,14 +10,13 @@ public class DCEntityDamageSource extends EntityDamageSource {
 
 
 
-    private EnumDamageArchetype archetype;
 
-    private EnumDamageSubType damageType;
-    public DCEntityDamageSource(EnumDamageArchetype damageArchetype, EnumDamageSubType damageTypes, @Nullable Entity source) {
+    private EnumDamageType damageType;
+    public DCEntityDamageSource(EnumDamageType damageTypes, @Nullable Entity source) {
         super(damageTypes.getName() +".entitydamage", source);
 
         this.damageType=damageTypes;
-        this.archetype=damageArchetype;
+
 
 
 
@@ -28,12 +26,9 @@ public class DCEntityDamageSource extends EntityDamageSource {
 
 
 
-    public EnumDamageArchetype getArchetype() {
-        return archetype;
-    }
 
 
-    public EnumDamageSubType getSubtype() {
+    public EnumDamageType getSubtype() {
         return damageType;
     }
 

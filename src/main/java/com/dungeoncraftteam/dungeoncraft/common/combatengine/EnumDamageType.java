@@ -1,11 +1,11 @@
 package com.dungeoncraftteam.dungeoncraft.common.combatengine;
 
-import net.minecraft.item.DyeColor;
+import com.dungeoncraftteam.dungeoncraft.DungeonCraft;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public enum EnumDamageSubType {
+public enum EnumDamageType {
 
     TRUE("true",0),
     ACID("acid",1),
@@ -25,9 +25,7 @@ public enum EnumDamageSubType {
 
 
 
-    public static final EnumDamageSubType[] VALUES = Arrays.stream(values()).sorted(Comparator.comparingInt(EnumDamageSubType::getId)).toArray((p_199795_0_) -> {
-        return new EnumDamageSubType[p_199795_0_];
-    });
+    public static final EnumDamageType[] VALUES = Arrays.stream(values()).sorted(Comparator.comparingInt(EnumDamageType::getId)).toArray((p_199795_0_) -> new EnumDamageType[p_199795_0_]);
 
     int id;
 
@@ -41,7 +39,7 @@ public enum EnumDamageSubType {
 
     String name;
 
-    EnumDamageSubType(String nameIn, int idIn) {
+    EnumDamageType(String nameIn, int idIn) {
 
         id=idIn;
 
@@ -53,8 +51,18 @@ public enum EnumDamageSubType {
     }
 
 
+    public String getDefensiveName() {
 
 
+        return DungeonCraft.MODID+"." +name+"Resist";
+    }
+
+
+    public String getOffensiveName() {
+
+
+        return DungeonCraft.MODID+"." +name+"Damage";
+    }
 
 
 }

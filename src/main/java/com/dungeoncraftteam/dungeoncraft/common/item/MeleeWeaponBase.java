@@ -1,12 +1,6 @@
 package com.dungeoncraftteam.dungeoncraft.common.item;
 
-import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageSubType;
-import com.dungeoncraftteam.dungeoncraft.common.combatengine.SubtypeModifier;
 import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemTier;
-
-import javax.annotation.Nullable;
-import java.util.HashMap;
 
 public class MeleeWeaponBase extends ItemBase {
 

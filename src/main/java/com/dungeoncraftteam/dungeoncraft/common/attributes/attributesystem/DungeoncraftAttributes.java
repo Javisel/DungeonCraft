@@ -3,6 +3,7 @@ package com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem;
 import com.dungeoncraftteam.dungeoncraft.DungeonCraft;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.corestats.CoreStat;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.corestats.EnumCoreStats;
+import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,7 +23,7 @@ public class DungeoncraftAttributes {
 
     //BATTLESTAT
     public static final IAttribute ARMOR = new RangedAttribute(null, "dungeoncraft.Armor", 0, 0.0D, 1000000).setDescription("A entity's Armor Value.").setShouldWatch(true);
-    public static final IAttribute MAGIC_RESIST = new RangedAttribute(null, "dungeoncraft.MagicResist", 10, 0.0D, 1000000).setDescription("A entity's Magic Resist Value.").setShouldWatch(true);
+    public static final IAttribute ELEMENTRESIST = new RangedAttribute(null, "dungeoncraft.elementResist", 10, 0.0D, 1000000).setDescription("A entity's Magic Resist Value.").setShouldWatch(true);
 
     public static final IAttribute SPELL_POWER = new RangedAttribute(null, "dungeoncraft.SpellPower", 0, 0.0D, 10000).setDescription("The Spell Power of an entity.").setShouldWatch(true);
     public static final IAttribute CRITCHANCE = new RangedAttribute(null, "dungeoncraft.CritChance", 0, 0.0D, 10000).setDescription("The Critical Strike Chance of an entity.").setShouldWatch(true);
@@ -39,6 +40,9 @@ public class DungeoncraftAttributes {
     public static final IAttribute RESOURCE_REGEN = new RangedAttribute(null, "dungeoncraft.ResourceRegen", 2.5d, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
     public static final IAttribute COOLDOWN_REDUCTION = new RangedAttribute(null, "dungeoncraft.CooldownReduction", 0.0D, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
     public static final IAttribute EXPERIENCE = new RangedAttribute(null, "dungeoncraft.Experience", 0, 0.0D, 10000).setDescription("The Magical Power of an entity.").setShouldWatch(true);
+
+
+
 
 
     public static final IAttribute STRENGTH = new CoreStat(null, "dungeoncraft.Strength" , EnumCoreStats.STRENGTH,new HashMap<IAttribute, CoreStat.modifier>()).setDescription("A entity's Strength Value.").setShouldWatch(true);
@@ -73,7 +77,7 @@ public class DungeoncraftAttributes {
         attributes.add(CONSTITUTION);
         ((CoreStat) CONSTITUTION).attributesModified.put(SharedMonsterAttributes.MAX_HEALTH,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,20));
         ((CoreStat) CONSTITUTION).attributesModified.put(HEALTH_REGEN,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,0.5));
-        ((CoreStat) CONSTITUTION).attributesModified.put(MAGIC_RESIST,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2));
+        ((CoreStat) CONSTITUTION).attributesModified.put(ELEMENTRESIST,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2));
 
 
 
@@ -87,8 +91,23 @@ public class DungeoncraftAttributes {
         ((CoreStat) WISDOM).attributesModified.put(COOLDOWN_REDUCTION,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2.5));
 
         attributes.add(CHARISMA);
+
+        //I'm not making a new Attribute for every damage type. Fight me.
+
+        for (EnumDamageType type : EnumDamageType.VALUES){
+            attributes.add( new RangedAttribute(null,type.getDefensiveName(),0,-10000,10000));
+            attributes.add( new RangedAttribute(null,type.getOffensiveName(),0,-10000,10000));
+
+
+
+        }
+
+
+
+
+
         attributes.add(ARMOR);
-        attributes.add(MAGIC_RESIST);
+        attributes.add(ELEMENTRESIST);
         attributes.add(SPELL_POWER);
         attributes.add(CRITCHANCE);
         attributes.add(CRITDAMAGE);

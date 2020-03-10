@@ -36,17 +36,24 @@ public class OverlayHandler extends GuiUtils {
             if (event.getType()== RenderGameOverlayEvent.ElementType.HEALTH) {
 
                 renderHealthBar();
+
+                event.setCanceled(true);
+            }
+
+            if (event.getType()== RenderGameOverlayEvent.ElementType.HOTBAR)  {
+                renderActives();
+
+            }
+
+            if (event.getType()== RenderGameOverlayEvent.ElementType.FOOD) {
+
+
+
                 event.setCanceled(true);
             }
 
 
-            if (event.isCancelable()) {
-                //event.setCanceled(true);
-            }
 
-
-
-            renderActives();
         }
 
     }
@@ -58,6 +65,13 @@ public class OverlayHandler extends GuiUtils {
 
 
     }
+
+    public void renderFoodbar() {
+
+
+
+    }
+
 
     public void renderHealthBar() {
         MainWindow scaledresolution = instance.mainWindow;
@@ -99,8 +113,8 @@ public class OverlayHandler extends GuiUtils {
 
         GlStateManager.color3f(0,0,0);
 
-        String hp = (int)instance.player.getHealth() + "/" + (int)instance.player.getMaxHealth();
-        int stringposx = (posx+91 - instance.fontRenderer.getStringWidth(hp))/2 + 83;
+        String hp = instance.player.getHealth() + "/" + instance.player.getMaxHealth();
+        int stringposx = (int) (((posx- instance.fontRenderer.getStringWidth(hp))/2)   +x/4.15);
 
         instance.fontRenderer.drawString(hp,stringposx,posy+1,Color.WHITE.getRGB()   );
 
