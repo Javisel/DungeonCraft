@@ -11,13 +11,13 @@ import java.util.UUID;
 
 public class Party {
 
-    public ArrayList<PlayerEntity> getMembers() {
+    public ArrayList<UUID> getMembers() {
         return members;
     }
 
-    private ArrayList<PlayerEntity> members;
+    private ArrayList<UUID> members;
 
-    public Party(ArrayList<PlayerEntity> members) {
+    public Party(ArrayList<UUID> members) {
         this.members = members;
     }
 
@@ -27,9 +27,9 @@ public class Party {
         CompoundNBT players = new CompoundNBT();
 
         int i = 0;
-        for (PlayerEntity playerEntity : members) {
+        for (UUID UUID : members) {
 
-            players.putUniqueId("player_" +i,  playerEntity.getUniqueID()    );
+            players.putUniqueId("player_" +i,  UUID   );
             i++;
 
 
@@ -43,9 +43,10 @@ public class Party {
 
     }
 
-    public void fromNBT(CompoundNBT nbt, World world) {
+    public static Party fromNBT(CompoundNBT nbt) {
 
-        members.clear();
+
+        ArrayList<UUID> partymembers = new ArrayList<>();
 
         int i = 0;
         boolean cont = true;
@@ -54,7 +55,7 @@ public class Party {
 
             if (nbt.contains("player_" +i)) {
 
-                members.add(world.getPlayerByUuid(nbt.getUniqueId("player_"+i)));
+                partymembers.add(nbt.getUniqueId("player_"+i));
             } else {
                 cont=false;
             }
@@ -63,8 +64,7 @@ public class Party {
         }
 
 
-
-
+        return new Party(partymembers);
 
 
     }
@@ -72,14 +72,14 @@ public class Party {
 
 
 
-    public PlayerEntity getPlayerByUUID(UUID id) {
+    public UUID getPlayerByUUID(PlayerEntity entity) {
 
-        for (PlayerEntity playerEntity : members) {
+        for (UUID uuid : members) {
 
 
-            if (playerEntity.getUniqueID() == id) {
+            if (entity.getUniqueID() == uuid) {
 
-                return  playerEntity;
+                return  uuid;
             }
         }
 

@@ -5,6 +5,9 @@ import com.dungeoncraftteam.dungeoncraft.common.CommonEventHandler;
 import com.dungeoncraftteam.dungeoncraft.common.capabilities.entity.EntityData;
 import com.dungeoncraftteam.dungeoncraft.common.capabilities.entity.EntityDataStorage;
 import com.dungeoncraftteam.dungeoncraft.common.capabilities.entity.IEntityData;
+import com.dungeoncraftteam.dungeoncraft.common.capabilities.player.IPlayerData;
+import com.dungeoncraftteam.dungeoncraft.common.capabilities.player.PlayerData;
+import com.dungeoncraftteam.dungeoncraft.common.capabilities.player.PlayerDataStorage;
 import com.dungeoncraftteam.dungeoncraft.common.registration.PacketRegistration;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -50,7 +53,7 @@ public class DungeonCraft
     {
 
         CapabilityManager.INSTANCE.register(IEntityData.class, new EntityDataStorage(), EntityData::new);
-       //TODO CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataStorage(), PlayerData::new);
+  CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataStorage(), PlayerData::new);
         MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
         PacketRegistration.register();
 

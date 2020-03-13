@@ -5,8 +5,6 @@ import net.minecraft.nbt.CompoundNBT;
 
 public interface IPlayerData {
 
-     Party getPlayerParty();
-     void joinParty(Party party);
 
      CompoundNBT writeNBT();
      void readNBT(CompoundNBT nbt);
