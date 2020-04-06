@@ -2,6 +2,7 @@ package com.dungeoncraftteam.dungeoncraft.client;
 
 import com.dungeoncraftteam.dungeoncraft.DungeonCraft;
 import com.dungeoncraftteam.dungeoncraft.common.DCUtilities;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -145,10 +146,10 @@ public class OverlayHandler extends GuiUtils {
 
         //MANA ratio
 
-        float manaamount = (float) (DCUtilities.getEntityData(instance.player).getResourceAmount()/DCUtilities.getEntityData(instance.player).getMaxResourceAmount().getValue());
+        float manaamount = (float) (DCUtilities.getEntityData(instance.player).getResourceAmount()/DCUtilities.getEntityData(instance.player).getStatMap().getAttributeInstance(DungeoncraftAttributes.MAX_RESOURCE_AMOUNT).getValue());
 
 
-        String manamount = DCUtilities.getEntityData(instance.player).getResourceAmount() +"/" + DCUtilities.getEntityData(instance.player).getMaxResourceAmount().getValue();
+        String manamount = DCUtilities.getEntityData(instance.player).getResourceAmount() +"/" + DCUtilities.getEntityData(instance.player).getStatMap().getAttributeInstance(DungeoncraftAttributes.MAX_RESOURCE_AMOUNT).getValue();
 
 
         drawTexturedModalRect(1,y-9,3,64, (int) (81 * manaamount),8,0);

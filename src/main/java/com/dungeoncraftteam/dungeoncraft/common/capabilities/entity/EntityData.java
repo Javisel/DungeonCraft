@@ -1,14 +1,11 @@
 package com.dungeoncraftteam.dungeoncraft.common.capabilities.entity;
 
-import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
-import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeInstance;
-import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeModifier;
-import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeMap;
+import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
+import net.minecraft.entity.ai.attributes.AttributeMap;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.nbt.CompoundNBT;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import static com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes.*;
 
@@ -16,10 +13,9 @@ public class EntityData implements IEntityData {
 
 
 
-    DCAttributeMap statMap = new DCAttributeMap();
+    AttributeMap statMap = new DCAttributeMap();
 
-    HashMap<EnumDamageType,ArrayList<DCAttributeModifier>> defensiveSubtypeModifiers = new HashMap<>();
-    HashMap<EnumDamageType, ArrayList<DCAttributeModifier>> offensiveSubtypeModifiers = new HashMap<>();
+
 
 
     int ticks = 0;
@@ -27,58 +23,12 @@ public class EntityData implements IEntityData {
 
 
     @Override
-    public DCAttributeMap getStatMap() {
+    public AttributeMap getStatMap() {
         return statMap;
     }
-    @Override
-    public DCAttributeInstance getStrength() {
-
-
-            return statMap.getAttributeInstance(STRENGTH);
-    }
 
     @Override
-    public DCAttributeInstance getDexterity() {
-        return statMap.getAttributeInstance(DEXTERITY);
-    }
-
-    @Override
-    public DCAttributeInstance getConstitution() {
-        return statMap.getAttributeInstance(CONSTITUTION);
-    }
-
-    @Override
-    public DCAttributeInstance getIntelligence() {
-        return statMap.getAttributeInstance(INTELLIGENCE);
-    }
-
-    @Override
-    public DCAttributeInstance getCharisma() {
-        return statMap.getAttributeInstance(CHARISMA);
-    }
-
-    @Override
-    public DCAttributeInstance getWisdom() {
-        return statMap.getAttributeInstance(WISDOM);
-    }
-
-    @Override
-    public DCAttributeInstance getArmour() {
-        return statMap.getAttributeInstance(DungeoncraftAttributes.ARMOR);
-    }
-
-    @Override
-    public DCAttributeInstance getMagicResist() {
-        return statMap.getAttributeInstance(DungeoncraftAttributes.ELEMENTRESIST);
-    }
-
-    @Override
-    public DCAttributeInstance getCritChance() {
-        return statMap.getAttributeInstance(DungeoncraftAttributes.CRITCHANCE);
-    }
-
-    @Override
-    public DCAttributeInstance getEnumDamageTypeArmor(EnumDamageType type) {
+    public IAttributeInstance getEnumDamageTypeArmor(EnumDamageType type) {
 
 
 
@@ -86,7 +36,7 @@ public class EntityData implements IEntityData {
     }
 
     @Override
-    public DCAttributeInstance getEnumDamageTypeDamage(EnumDamageType type) {
+    public IAttributeInstance getEnumDamageTypeDamage(EnumDamageType type) {
 
 
 
@@ -97,46 +47,6 @@ public class EntityData implements IEntityData {
 
 
     @Override
-    public DCAttributeInstance getCritDamage() {
-        return statMap.getAttributeInstance(DungeoncraftAttributes.CRITDAMAGE);
-    }
-
-    @Override
-    public DCAttributeInstance getLifesteal() {
-        return statMap.getAttributeInstance(LIFESTEAL);
-    }
-
-    @Override
-    public DCAttributeInstance getFlatArmorPenetration() {
-        return statMap.getAttributeInstance(FLATARMORPEN);
-    }
-
-    @Override
-    public DCAttributeInstance getFlatMagicPenetration() {
-        return statMap.getAttributeInstance(FLATMAGICPEN);
-    }
-
-    @Override
-    public DCAttributeInstance getPercentArmorPenetration() {
-        return statMap.getAttributeInstance(PERCENTARMORPEN);
-    }
-
-    @Override
-    public DCAttributeInstance getPercentMagicPenetration() {
-        return statMap.getAttributeInstance(PERCENTMAGICPEN);
-    }
-
-    @Override
-    public DCAttributeInstance getSpellVamp() {
-        return statMap.getAttributeInstance(SPELLVAMP);
-    }
-
-    @Override
-    public DCAttributeInstance getHealthRegen() {
-        return statMap.getAttributeInstance(HEALTH_REGEN);
-    }
-
-    @Override
     public float getResourceAmount() {
         return resourceamount;
     }
@@ -145,7 +55,7 @@ public class EntityData implements IEntityData {
     @Override
     public void setResourceAmount(double amount) {
 
-        if (amount>getMaxResourceAmount().getValue()) {
+        if (amount>statMap.getAttributeInstance(MAX_RESOURCE_AMOUNT).getValue()) {
             amount=resourceamount;
         }
 
@@ -156,8 +66,8 @@ public class EntityData implements IEntityData {
     @Override
     public void addResourceAmount(float amount) {
 
-        if (amount+resourceamount > getMaxResourceAmount().getValue()) {
-            amount= (float) (getMaxResourceAmount().getValue()-resourceamount);
+        if (amount+resourceamount > statMap.getAttributeInstance(MAX_RESOURCE_AMOUNT).getValue()) {
+            amount= (float) (statMap.getAttributeInstance(MAX_RESOURCE_AMOUNT).getValue()-resourceamount);
 
         }
 
@@ -169,52 +79,14 @@ public class EntityData implements IEntityData {
     }
 
 
-    @Override
-    public DCAttributeInstance getMaxResourceAmount() {
-        return statMap.getAttributeInstance(MAX_RESOURCE_AMOUNT);
-    }
-
-    @Override
-    public DCAttributeInstance getCooldownReduction() {
-        return statMap.getAttributeInstance(COOLDOWN_REDUCTION);
-    }
-
-    @Override
-    public DCAttributeInstance getExperience() {
-        return statMap.getAttributeInstance(EXPERIENCE);
-    }
-
-    @Override
-    public DCAttributeInstance getResourceRegen() {
-        return statMap.getAttributeInstance(RESOURCE_REGEN);
-    }
-
-    @Override
-    public HashMap<EnumDamageType, ArrayList<DCAttributeModifier>> getSubtypeDefendingModifiers() {
-        return defensiveSubtypeModifiers;
-    }
-
-    @Override
-    public HashMap<EnumDamageType, ArrayList<DCAttributeModifier>> getSubtypeAttackingModifiers() {
-        return offensiveSubtypeModifiers;
-    }
 
     @Override
     public void loadNBT(CompoundNBT nbt) {
-        statMap  = new DCAttributeMap();
+        statMap  = new AttributeMap();
         DungeoncraftAttributes.readAttributes(statMap, nbt.getList("attributemap", 10));
 
         resourceamount=nbt.getFloat("resourceamount");
     }
-
-
-
-
-
-
-
-
-
 
     @Override
     public CompoundNBT writeNBT() {

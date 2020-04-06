@@ -1,7 +1,6 @@
 package com.dungeoncraftteam.dungeoncraft.common.attributes.corestats;
 
 import com.dungeoncraftteam.dungeoncraft.common.DCUtilities;
-import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeModifier;
 import com.dungeoncraftteam.dungeoncraft.common.capabilities.entity.IEntityData;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
 import net.minecraft.entity.LivingEntity;
@@ -17,11 +16,11 @@ public  class CoreStat extends RangedAttribute {
 
   public static class modifier{
 
-        DCAttributeModifier.Operation operation;
+        AttributeModifier.Operation operation;
         double value;
 
 
-        public modifier(DCAttributeModifier.Operation operation, double value) {
+        public modifier(AttributeModifier.Operation operation, double value) {
             this.operation = operation;
             this.value = value;
         }
@@ -37,7 +36,7 @@ public  class CoreStat extends RangedAttribute {
 
     public CoreStat(@Nullable IAttribute parentIn, String unlocalizedNameIn, EnumCoreStats stat,  HashMap<IAttribute, modifier> attributesModified) {
         //TODO replace Default, Minimum and Max with Config values
-        super(parentIn, unlocalizedNameIn, 0, -10, 20);
+        super(parentIn, unlocalizedNameIn, 0, -10, 40);
         this.stat = stat;
         this.attributesModified = attributesModified;
     }
@@ -50,24 +49,35 @@ public  class CoreStat extends RangedAttribute {
         }
 
         IEntityData entityData = DCUtilities.getEntityData(entity);
+
+        int truevalue = (int) (entityData.getStatMap().getAttributeInstanceByName(this.getName()).getValue() - 10);
+
         for (IAttribute attribute : attributesModified.keySet()) {
 
             if (DungeoncraftAttributes.attributes.contains(attribute)) {
 
-                entityData.getStatMap().getAttributeInstance(attribute).applyModifier(new DCAttributeModifier(stat.uuid,stat.name()+".modifier",attributesModified.get(attribute).value,attributesModified.get(attribute).operation));
+                if (entityData.getStatMap().getAttributeInstanceByName(attribute.getName()).getModifier(stat.uuid) !=null) {
+                    entityData.getStatMap().getAttributeInstanceByName(attribute.getName()).removeModifier(stat.uuid);
+                }
+
+                entityData.getStatMap().getAttributeInstance(attribute).applyModifier(new AttributeModifier(stat.uuid,stat.name()+".modifier",attributesModified.get(attribute).value *truevalue,attributesModified.get(attribute).operation));
 
 
             } else {
 
 
+                if (entity.getAttributes().getAttributeInstanceByName(attribute.getName()).getModifier(stat.uuid) !=null) {
+                    entity.getAttributes().getAttributeInstanceByName(attribute.getName()).removeModifier(stat.uuid);
+                }
+
                 AttributeModifier.Operation operation;
 
-                if (attributesModified.get(attribute).operation== DCAttributeModifier.Operation.ADDITION) {
+                if (attributesModified.get(attribute).operation== AttributeModifier.Operation.ADDITION) {
 
                     operation= AttributeModifier.Operation.ADDITION;
                 }
 
-               else if (attributesModified.get(attribute).operation== DCAttributeModifier.Operation.MULTIPLY_BASE) {
+               else if (attributesModified.get(attribute).operation== AttributeModifier.Operation.MULTIPLY_BASE) {
 
                     operation= AttributeModifier.Operation.MULTIPLY_BASE;
                 } else
@@ -76,7 +86,7 @@ public  class CoreStat extends RangedAttribute {
                     operation= AttributeModifier.Operation.MULTIPLY_TOTAL;
                 }
 
-                entity.getAttribute(attribute).applyModifier(new AttributeModifier(stat.uuid,stat.name()+".modifier",attributesModified.get(attribute).value,operation));
+                entity.getAttribute(attribute).applyModifier(new AttributeModifier(stat.uuid,stat.name()+".modifier",attributesModified.get(attribute).value *truevalue,operation));
 
 
             }

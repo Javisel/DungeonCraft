@@ -6,6 +6,7 @@ import com.dungeoncraftteam.dungeoncraft.common.attributes.corestats.EnumCoreSta
 import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.*;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 
@@ -56,43 +57,50 @@ public class DungeoncraftAttributes {
 
 
     public static ArrayList<IAttribute> attributes = new ArrayList<>();
-
+    public static ArrayList<CoreStat> coreStats = new ArrayList<>();
     static  {
         attributes.add(STRENGTH);
+        coreStats.add((CoreStat) STRENGTH);
 
+        ((CoreStat) STRENGTH).attributesModified.put(SharedMonsterAttributes.ATTACK_DAMAGE,new CoreStat.modifier(AttributeModifier.Operation.ADDITION,4));
+        ((CoreStat) STRENGTH).attributesModified.put(ARMOR,new CoreStat.modifier(AttributeModifier.Operation.ADDITION,2));
 
-        ((CoreStat) STRENGTH).attributesModified.put(SharedMonsterAttributes.ATTACK_DAMAGE,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,4));
-        ((CoreStat) STRENGTH).attributesModified.put(ARMOR,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2));
-
+    
 
 
 
 
         attributes.add(DEXTERITY);
+        coreStats.add((CoreStat) DEXTERITY);
 
-        ((CoreStat) DEXTERITY).attributesModified.put(SharedMonsterAttributes.ATTACK_SPEED,new CoreStat.modifier(DCAttributeModifier.Operation.MULTIPLY_BASE,0.05));
-        ((CoreStat) DEXTERITY).attributesModified.put(SharedMonsterAttributes.MOVEMENT_SPEED,new CoreStat.modifier(DCAttributeModifier.Operation.MULTIPLY_BASE,0.005));
-        ((CoreStat) DEXTERITY).attributesModified.put(CRITCHANCE,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2.5));
+        ((CoreStat) DEXTERITY).attributesModified.put(SharedMonsterAttributes.ATTACK_SPEED,new CoreStat.modifier(AttributeModifier.Operation.MULTIPLY_BASE,0.05));
+        ((CoreStat) DEXTERITY).attributesModified.put(SharedMonsterAttributes.MOVEMENT_SPEED,new CoreStat.modifier(AttributeModifier.Operation.MULTIPLY_BASE,0.005));
+        ((CoreStat) DEXTERITY).attributesModified.put(CRITCHANCE,new CoreStat.modifier(AttributeModifier.Operation.ADDITION,2.5));
 
         attributes.add(CONSTITUTION);
-        ((CoreStat) CONSTITUTION).attributesModified.put(SharedMonsterAttributes.MAX_HEALTH,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,20));
-        ((CoreStat) CONSTITUTION).attributesModified.put(HEALTH_REGEN,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,0.5));
-        ((CoreStat) CONSTITUTION).attributesModified.put(ELEMENTRESIST,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2));
+        coreStats.add((CoreStat) CONSTITUTION);
+
+        ((CoreStat) CONSTITUTION).attributesModified.put(SharedMonsterAttributes.MAX_HEALTH,new CoreStat.modifier(AttributeModifier.Operation.ADDITION,20));
+        ((CoreStat) CONSTITUTION).attributesModified.put(HEALTH_REGEN,new CoreStat.modifier(AttributeModifier.Operation.ADDITION,0.5));
+        ((CoreStat) CONSTITUTION).attributesModified.put(ELEMENTRESIST,new CoreStat.modifier(AttributeModifier.Operation.ADDITION,2));
 
 
 
         attributes.add(INTELLIGENCE);
+        coreStats.add((CoreStat) INTELLIGENCE);
 
-        ((CoreStat) INTELLIGENCE).attributesModified.put(MAX_RESOURCE_AMOUNT,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,10));
-        ((CoreStat) INTELLIGENCE).attributesModified.put(RESOURCE_REGEN,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,0.5));
+        ((CoreStat) INTELLIGENCE).attributesModified.put(MAX_RESOURCE_AMOUNT,new CoreStat.modifier(AttributeModifier.Operation.ADDITION,10));
+        ((CoreStat) INTELLIGENCE).attributesModified.put(RESOURCE_REGEN,new CoreStat.modifier(AttributeModifier.Operation.ADDITION,0.5));
 
 
         attributes.add(WISDOM);
-        ((CoreStat) WISDOM).attributesModified.put(COOLDOWN_REDUCTION,new CoreStat.modifier(DCAttributeModifier.Operation.ADDITION,2.5));
+        coreStats.add((CoreStat) WISDOM);
+
+        ((CoreStat) WISDOM).attributesModified.put(COOLDOWN_REDUCTION,new CoreStat.modifier(AttributeModifier.Operation.ADDITION,2.5));
 
         attributes.add(CHARISMA);
 
-        //I'm not making a new Attribute for every damage type. Fight me.
+        coreStats.add((CoreStat) CHARISMA);
 
         for (EnumDamageType type : EnumDamageType.VALUES){
             attributes.add( new RangedAttribute(null,type.getDefensiveName(),0,-10000,10000));
@@ -127,7 +135,7 @@ public class DungeoncraftAttributes {
 
 
 
-    public static void loadAttributes(DCAttributeMap attributeMap) {
+    public static void loadAttributes(AttributeMap attributeMap) {
 
 
 
@@ -140,26 +148,26 @@ public class DungeoncraftAttributes {
     }
 
 
-    public static ListNBT writeAttributes(DCAttributeMap map) {
+    public static ListNBT writeAttributes(AttributeMap map) {
         ListNBT listnbt = new ListNBT();
 
-        for(DCAttributeInstance iattributeinstance : map.getAllAttributes()) {
+        for(IAttributeInstance iattributeinstance : map.getAllAttributes()) {
             listnbt.add(writeAttribute(iattributeinstance));
         }
 
         return listnbt;
     }
 
-    private static CompoundNBT writeAttribute(DCAttributeInstance instance) {
+    private static CompoundNBT writeAttribute(IAttributeInstance instance) {
         CompoundNBT compoundnbt = new CompoundNBT();
         IAttribute iattribute = instance.getAttribute();
         compoundnbt.putString("Name", iattribute.getName());
         compoundnbt.putDouble("Base", instance.getBaseValue());
-        Collection<DCAttributeModifier> collection = instance.getModifiers();
+        Collection<AttributeModifier> collection = instance.getModifiers();
         if (collection != null && !collection.isEmpty()) {
             ListNBT listnbt = new ListNBT();
 
-            for(DCAttributeModifier attributemodifier : collection) {
+            for(AttributeModifier attributemodifier : collection) {
                 if (attributemodifier.isSaved()) {
                     listnbt.add(writeAttributeModifier(attributemodifier));
                 }
@@ -171,7 +179,7 @@ public class DungeoncraftAttributes {
         return compoundnbt;
     }
 
-    public static CompoundNBT writeAttributeModifier(DCAttributeModifier modifier) {
+    public static CompoundNBT writeAttributeModifier(AttributeModifier modifier) {
         CompoundNBT compoundnbt = new CompoundNBT();
         compoundnbt.putString("Name", modifier.getName());
         compoundnbt.putDouble("Amount", modifier.getAmount());
@@ -180,10 +188,10 @@ public class DungeoncraftAttributes {
         return compoundnbt;
     }
 
-    public static void readAttributes(DCAttributeMap map, ListNBT list) {
+    public static void readAttributes(AttributeMap map, ListNBT list) {
         for(int i = 0; i < list.size(); ++i) {
             CompoundNBT compoundnbt = list.getCompound(i);
-            DCAttributeInstance iattributeinstance = map.getAttributeInstanceByName(compoundnbt.getString("Name"));
+            IAttributeInstance iattributeinstance = map.getAttributeInstanceByName(compoundnbt.getString("Name"));
             if (iattributeinstance == null) {
                 DungeonCraft.LOGGER.warn("Ignoring unknown attribute '{}'", (Object)compoundnbt.getString("Name"));
             } else {
@@ -193,15 +201,15 @@ public class DungeoncraftAttributes {
 
     }
 
-    private static void readAttribute(DCAttributeInstance instance, CompoundNBT compound) {
+    private static void readAttribute(IAttributeInstance instance, CompoundNBT compound) {
         instance.setBaseValue(compound.getDouble("Base"));
         if (compound.contains("Modifiers", 9)) {
             ListNBT listnbt = compound.getList("Modifiers", 10);
 
             for(int i = 0; i < listnbt.size(); ++i) {
-                DCAttributeModifier attributemodifier = readAttributeModifier(listnbt.getCompound(i));
+                AttributeModifier attributemodifier = readAttributeModifier(listnbt.getCompound(i));
                 if (attributemodifier != null) {
-                    DCAttributeModifier attributemodifier1 = instance.getModifier(attributemodifier.getID());
+                    AttributeModifier attributemodifier1 = instance.getModifier(attributemodifier.getID());
                     if (attributemodifier1 != null) {
                         instance.removeModifier(attributemodifier1);
                     }
@@ -214,12 +222,12 @@ public class DungeoncraftAttributes {
     }
 
     @Nullable
-    public static DCAttributeModifier readAttributeModifier(CompoundNBT compound) {
+    public static AttributeModifier readAttributeModifier(CompoundNBT compound) {
         UUID uuid = compound.getUniqueId("UUID");
 
         try {
-            DCAttributeModifier.Operation attributemodifier$operation = DCAttributeModifier.Operation.byId(compound.getInt("Operation"));
-            return new DCAttributeModifier(uuid, compound.getString("Name"), compound.getDouble("Amount"), attributemodifier$operation);
+            AttributeModifier.Operation attributemodifier$operation = AttributeModifier.Operation.byId(compound.getInt("Operation"));
+            return new AttributeModifier(uuid, compound.getString("Name"), compound.getDouble("Amount"), attributemodifier$operation);
         } catch (Exception exception) {
             DungeonCraft.LOGGER.warn("Unable to create attribute: {}", (Object)exception.getMessage());
             return null;

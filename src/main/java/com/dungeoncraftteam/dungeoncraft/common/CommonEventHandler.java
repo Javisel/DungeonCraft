@@ -1,5 +1,6 @@
 package com.dungeoncraftteam.dungeoncraft.common;
 
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
 import com.dungeoncraftteam.dungeoncraft.common.network.EntityDataMessage;
 import com.dungeoncraftteam.dungeoncraft.common.registration.PacketRegistration;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -24,8 +25,8 @@ public class CommonEventHandler {
 
             if (DCUtilities.getEntityData(e.player).getTicks()==20) {
 
-                e.player.heal((float) DCUtilities.getEntityData(e.player).getHealthRegen().getValue());
-                DCUtilities.getEntityData(e.player).addResourceAmount((float) DCUtilities.getEntityData(e.player).getResourceRegen().getValue());
+                e.player.heal((float) DCUtilities.getEntityData(e.player).getStatMap().getAttributeInstance(DungeoncraftAttributes.HEALTH_REGEN).getValue());
+                DCUtilities.getEntityData(e.player).addResourceAmount((float) DCUtilities.getEntityData(e.player).getStatMap().getAttributeInstance(DungeoncraftAttributes.RESOURCE_REGEN).getValue());
                 PacketRegistration.HANDLER.sendTo(new EntityDataMessage(DCUtilities.getEntityData(e.player).writeNBT()), ((ServerPlayerEntity) e.player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 
             }
