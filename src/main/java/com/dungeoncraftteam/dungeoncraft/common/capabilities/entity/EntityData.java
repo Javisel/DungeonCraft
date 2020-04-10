@@ -13,7 +13,7 @@ public class EntityData implements IEntityData {
 
 
 
-    AttributeMap statMap = new DCAttributeMap();
+    DCAttributeMap statMap = new DCAttributeMap();
 
 
 
@@ -23,7 +23,7 @@ public class EntityData implements IEntityData {
 
 
     @Override
-    public AttributeMap getStatMap() {
+    public DCAttributeMap getStatMap() {
         return statMap;
     }
 
@@ -82,7 +82,7 @@ public class EntityData implements IEntityData {
 
     @Override
     public void loadNBT(CompoundNBT nbt) {
-        statMap  = new AttributeMap();
+        statMap  = new DCAttributeMap();
         DungeoncraftAttributes.readAttributes(statMap, nbt.getList("attributemap", 10));
 
         resourceamount=nbt.getFloat("resourceamount");
