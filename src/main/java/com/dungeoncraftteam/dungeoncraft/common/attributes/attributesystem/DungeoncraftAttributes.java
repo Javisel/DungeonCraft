@@ -1,12 +1,10 @@
 package com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem;
 
-import com.dungeoncraftteam.dungeoncraft.DungeonCraft;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.corestats.CoreStat;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.corestats.EnumCoreStats;
 import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.*;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 
@@ -141,7 +139,7 @@ public class DungeoncraftAttributes {
 
         for (IAttribute attribute : attributes) {
 
-            attributeMap.registerAttribute(attribute);
+            attributeMap.registerAttribute(attribute).setBaseValue(attribute.getDefaultValue());
         }
 
 
@@ -193,7 +191,6 @@ public class DungeoncraftAttributes {
             CompoundNBT compoundnbt = list.getCompound(i);
             IAttributeInstance iattributeinstance = map.getAttributeInstanceByName(compoundnbt.getString("Name"));
             if (iattributeinstance == null) {
-                DungeonCraft.LOGGER.warn("Ignoring unknown attribute '{}'", (Object)compoundnbt.getString("Name"));
             } else {
                 readAttribute(iattributeinstance, compoundnbt);
             }
@@ -229,7 +226,7 @@ public class DungeoncraftAttributes {
             AttributeModifier.Operation attributemodifier$operation = AttributeModifier.Operation.byId(compound.getInt("Operation"));
             return new AttributeModifier(uuid, compound.getString("Name"), compound.getDouble("Amount"), attributemodifier$operation);
         } catch (Exception exception) {
-            DungeonCraft.LOGGER.warn("Unable to create attribute: {}", (Object)exception.getMessage());
+
             return null;
         }
     }

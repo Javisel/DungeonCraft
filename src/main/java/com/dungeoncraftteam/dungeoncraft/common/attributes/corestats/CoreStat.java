@@ -1,8 +1,8 @@
 package com.dungeoncraftteam.dungeoncraft.common.attributes.corestats;
 
 import com.dungeoncraftteam.dungeoncraft.common.DCUtilities;
-import com.dungeoncraftteam.dungeoncraft.common.capabilities.entity.IEntityData;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
+import com.dungeoncraftteam.dungeoncraft.common.capabilities.entity.IEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;

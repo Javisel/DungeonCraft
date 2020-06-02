@@ -1,12 +1,9 @@
 package com.dungeoncraftteam.dungeoncraft.common.capabilities.world;
 
-import com.ibm.icu.text.UTF16;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.UUID;
 
 public class Party {

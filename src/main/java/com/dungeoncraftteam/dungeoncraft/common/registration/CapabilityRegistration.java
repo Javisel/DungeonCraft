@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 public class CapabilityRegistration {
 
 
+
     @SubscribeEvent
     public static void attachCapability( final AttachCapabilitiesEvent<Entity> event) {
 

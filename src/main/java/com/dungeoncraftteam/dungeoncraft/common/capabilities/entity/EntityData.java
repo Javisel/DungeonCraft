@@ -1,13 +1,12 @@
 package com.dungeoncraftteam.dungeoncraft.common.capabilities.entity;
 
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeMap;
-import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
 import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes;
-import net.minecraft.entity.ai.attributes.AttributeMap;
+import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.nbt.CompoundNBT;
 
-import static com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes.*;
+import static com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DungeoncraftAttributes.MAX_RESOURCE_AMOUNT;
 
 public class EntityData implements IEntityData {
 
@@ -20,7 +19,7 @@ public class EntityData implements IEntityData {
 
     int ticks = 0;
     float resourceamount = 0;
-
+    int level = 0;
 
     @Override
     public DCAttributeMap getStatMap() {
@@ -44,7 +43,10 @@ public class EntityData implements IEntityData {
     }
 
 
-
+    @Override
+    public int getLevel() {
+        return level;
+    }
 
     @Override
     public float getResourceAmount() {

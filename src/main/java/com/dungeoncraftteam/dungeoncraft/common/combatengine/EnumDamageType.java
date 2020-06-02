@@ -1,9 +1,13 @@
 package com.dungeoncraftteam.dungeoncraft.common.combatengine;
 
 import com.dungeoncraftteam.dungeoncraft.DungeonCraft;
+import com.dungeoncraftteam.dungeoncraft.common.effects.Trauma;
+import net.minecraft.potion.Effect;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+import static com.dungeoncraftteam.dungeoncraft.common.registration.EffectRegistration.*;
 
 public enum EnumDamageType {
 
@@ -11,7 +15,7 @@ public enum EnumDamageType {
     ACID("acid",1),
     BLUDGEONING("bludgeoning",2),
     COLD("cold",3),
-    HEAT("heat",4),
+    FIRE("fire",4),
     FORCE("force",5),
     LIGHTNING("lightning",6),
     NECROTIC("necrotic",7),
@@ -38,6 +42,7 @@ public enum EnumDamageType {
     }
 
     String name;
+
 
     EnumDamageType(String nameIn, int idIn) {
 

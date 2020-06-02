@@ -4,11 +4,8 @@ import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.Dunge
 import com.dungeoncraftteam.dungeoncraft.common.network.EntityDataMessage;
 import com.dungeoncraftteam.dungeoncraft.common.registration.PacketRegistration;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkDirection;
 

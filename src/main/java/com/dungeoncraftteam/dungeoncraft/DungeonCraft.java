@@ -10,12 +10,10 @@ import com.dungeoncraftteam.dungeoncraft.common.capabilities.player.PlayerData;
 import com.dungeoncraftteam.dungeoncraft.common.capabilities.player.PlayerDataStorage;
 import com.dungeoncraftteam.dungeoncraft.common.registration.PacketRegistration;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -36,6 +34,9 @@ public class DungeonCraft
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "dungeoncraft";
     public DungeonCraft() {
+
+        
+
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading

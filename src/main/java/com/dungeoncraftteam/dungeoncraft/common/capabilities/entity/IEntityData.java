@@ -1,13 +1,13 @@
 package com.dungeoncraftteam.dungeoncraft.common.capabilities.entity;
 
+import com.dungeoncraftteam.dungeoncraft.common.attributes.attributesystem.DCAttributeMap;
 import com.dungeoncraftteam.dungeoncraft.common.combatengine.EnumDamageType;
-import net.minecraft.entity.ai.attributes.AttributeMap;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.nbt.CompoundNBT;
 
 public interface IEntityData {
 
-    AttributeMap getStatMap();
+    DCAttributeMap getStatMap();
 
 
 
@@ -37,4 +37,5 @@ public interface IEntityData {
     int getTicks();
 
     void tick();
+    int getLevel();
 }
